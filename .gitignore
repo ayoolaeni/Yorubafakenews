@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+venv/
+.venv/
+*.egg
+
+# Env
+.env
+
+# Data (all regenerable from scrapers+preprocessing pipeline)
+data/raw/**
+!data/raw/genuine/.gitkeep
+!data/raw/fake/.gitkeep
+data/interim/**
+!data/interim/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+data/annotated/**
+!data/annotated/.gitkeep
+data/splits/**
+!data/splits/.gitkeep
+
+# Model artefacts (large binaries) - keep manifest
+models/**
+!models/manifest.json
+!models/classical/.gitkeep
+!models/transformers/.gitkeep
+
+# Results (regenerable)
+results/metrics/**
+results/figures/**
+!results/.gitkeep
+!results/metrics/.gitkeep
+!results/figures/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Selenium / scraping state
+seen_urls.json

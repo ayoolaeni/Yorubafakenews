@@ -1,0 +1,40 @@
+project:
+  name: yoruba-fake-news-detection
+  random_seed: 42            # SINGLE seed governs splitting + all model randomness
+
+paths:
+  raw: data/raw
+  interim: data/interim
+  annotated: data/annotated/corpus.csv
+  processed: data/processed
+  splits: data/splits
+  models: models
+  results: results
+
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+  stratify_by: label
+  # The split is written ONCE to data/splits/ and never regenerated.
+
+corpus:
+  target_size_min: 3000
+  target_size_max: 4000
+  target_balance: 0.5        # aim for even classes
+  min_tokens: 15             # discard items shorter than this
+  max_tokens: 1000
+
+preprocessing:
+  variants:                  # BOTH must be produced and evaluated
+    - diacritic_stripped
+    - diacritic_preserved
+  stopword_removal: [true, false]   # evaluated both ways
+  retain_english_segments: true
+  emoji_as_feature: true     # remove emoji from text, keep count as numeric feature
+
+dedup:
+  near_duplicate_cosine_threshold: 0.95
+
+leakage:
+  source_only_accuracy_flag_threshold: 0.70

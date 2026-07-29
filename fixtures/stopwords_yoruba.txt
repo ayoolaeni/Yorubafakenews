@@ -1,0 +1,52 @@
+# Starter Yoruba stopword list (diacritics preserved).
+# One word per line; lines starting with # are ignored.
+# This is a scaffold list of common function words -- extend it once real
+# corpus frequency counts are available (see src/preprocessing/pipeline.py).
+a
+àti
+àwọn
+bí
+bẹ́ẹ̀ni
+fún
+gẹ́gẹ́
+jẹ́
+kan
+kì
+kí
+kò
+láti
+láàrin
+lè
+lórí
+mo
+máa
+ń
+náà
+ni
+nínú
+nígbà
+o
+pé
+pẹ̀lú
+sì
+sí
+sínú
+ṣùgbọ́n
+tí
+ti
+tó
+wà
+wọn
+yìí
+yẹn
+yóò
+an
+fun
+ki
+naa
+sinu
+sugbon
+won
+yii
+yen
+yoo

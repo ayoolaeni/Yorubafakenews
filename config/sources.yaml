@@ -1,0 +1,91 @@
+# Scraping targets, selectors, and rate limits.
+# Selectors are best-effort starting points -- real sites change markup over
+# time, so validate against a handful of live pages before a large run and
+# adjust here rather than in code (base_scraper.py reads this file at runtime).
+
+genuine:
+  - name: BBC News Yoruba
+    base_url: https://www.bbc.com/yoruba
+    type: rss_then_scrape
+    rss: https://feeds.bbci.co.uk/yoruba/rss.xml
+    # Verified 2026-07-29 against a live article: BBC's page has no <article>
+    # tag, so "article p" always matched zero paragraphs. p.css-tmqcq9 is the
+    # body-paragraph class in the current build; it's a CSS-in-JS hash, so
+    # re-verify it if scraping starts turning up empty again.
+    article_selector: "main"
+    title_selector: "h1"
+    body_selector: "p.css-tmqcq9"
+    rate_limit_seconds: 3
+
+  - name: Voice of Nigeria Yoruba
+    base_url: https://von.gov.ng/category/yoruba/
+    type: scrape
+    listing_selector: "article a.entry-title-link, h2.entry-title a"
+    title_selector: "h1.entry-title"
+    body_selector: "div.entry-content p"
+    rate_limit_seconds: 3
+
+  - name: Alaroye
+    base_url: https://alaroye.org
+    type: scrape
+    listing_selector: "h2.entry-title a, article a"
+    title_selector: "h1.entry-title"
+    body_selector: "div.entry-content p"
+    rate_limit_seconds: 3
+
+fake:
+  - name: Dubawa
+    # Verified 2026-07-29: dubawa.org is a multi-language (EN/Hausa/Yoruba/...)
+    # fact-checker; the site root mixes all languages, so this must point at
+    # the Yoruba category or every scraped "fake" record would be off-language.
+    base_url: https://dubawa.org/category/african-languages/yoruba/
+    type: scrape
+    listing_selector: "h3 a"
+    max_listing_pages: 8  # WordPress /page/N/ pagination; verified up to page 13 exists
+    # CRITICAL: extract the ORIGINAL false claim text, not the fact-checker's
+    # rebuttal prose. Dubawa's Yoruba articles have no <blockquote> -- the
+    # claim is the paragraph starting "Aheso:" (Yoruba for "Claim:", also
+    # spelled "Àhèsọ:" with full diacritics depending on the article), so
+    # claim_selector lists candidate paragraphs and claim_keyword picks the
+    # one whose diacritic-stripped text contains it (see
+    # find_claim_paragraph in base_scraper.py). Confirmed across 3 live
+    # articles; re-check if scraping starts returning zero claims.
+    claim_selector: "div.entry-content p"
+    claim_keyword: "aheso"
+    verdict_selector: "div.entry-content p"
+    rate_limit_seconds: 3
+
+  - name: Africa Check
+    base_url: https://africacheck.org
+    type: scrape
+    listing_selector: "h2.entry-title a, article a"
+    claim_selector: "blockquote, p:contains('Claim')"
+    verdict_selector: "div.entry-content"
+    rate_limit_seconds: 3
+
+  - name: FactCheckHub
+    base_url: https://factcheckhub.com
+    type: scrape
+    listing_selector: "h2.entry-title a, article a"
+    claim_selector: "blockquote, p:contains('Claim')"
+    verdict_selector: "div.entry-content"
+    rate_limit_seconds: 3
+
+  - name: CDD Fact-Check
+    base_url: https://www.cddwestafrica.org/category/fact-check/
+    type: scrape
+    listing_selector: "h2.entry-title a, article a"
+    claim_selector: "blockquote, p:contains('Claim')"
+    verdict_selector: "div.entry-content"
+    rate_limit_seconds: 3
+
+social:
+  ingestion: manual_csv        # data/raw/fake/social_posts.csv
+  required_columns: [url, text, platform, verified_false_by, collected_at, public]
+
+scraper_defaults:
+  default_rate_limit_seconds: 3
+  max_retries: 3
+  backoff_base_seconds: 2
+  user_agent_template: "YorubaFakeNewsResearchBot/0.1 (MIT dissertation research; contact: {contact_email})"
+  timeout_seconds: 15

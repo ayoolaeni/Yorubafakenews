@@ -1,0 +1,29 @@
+classical:
+  naive_bayes:
+    class: MultinomialNB
+    grid: {alpha: [0.01, 0.1, 0.5, 1.0]}
+  svm:
+    class: LinearSVC
+    grid: {C: [0.01, 0.1, 1.0, 10.0], class_weight: [null, balanced]}
+    calibrate: true            # needed for probability/confidence output
+  logistic_regression:
+    class: LogisticRegression
+    grid: {C: [0.01, 0.1, 1.0, 10.0], penalty: [l2], max_iter: [2000]}
+  random_forest:
+    class: RandomForestClassifier
+    grid: {n_estimators: [200, 500], max_depth: [null, 20, 50], min_samples_leaf: [1, 3]}
+
+transformers:
+  afriberta:
+    checkpoint: castorini/afriberta_large
+    grid: {learning_rate: [2e-5, 3e-5, 5e-5], batch_size: [8, 16], epochs: [3, 4, 5]}
+    max_length: 256
+  afroxlmr:
+    checkpoint: Davlan/afro-xlmr-base
+    grid: {learning_rate: [1e-5, 2e-5, 3e-5], batch_size: [8, 16], epochs: [3, 4, 5]}
+    max_length: 256
+
+training:
+  cv_folds: 5                  # classical models only
+  early_stopping_patience: 2   # transformers, on val F1
+  primary_metric: f1           # governs model selection
