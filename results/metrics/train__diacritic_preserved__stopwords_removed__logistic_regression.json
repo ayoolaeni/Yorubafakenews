@@ -1,0 +1,13 @@
+{
+  "variant": "diacritic_preserved__stopwords_removed",
+  "model": "logistic_regression",
+  "cv_folds": 5,
+  "scoring": "f1_macro",
+  "best_params": {
+    "clf__C": 1.0,
+    "clf__max_iter": 2000,
+    "clf__penalty": "l2"
+  },
+  "best_cv_score": 0.9822222222222223,
+  "model_path": "C:\\Users\\AYOOLA KAYODE\\Desktop\\PROJECT DOCUMENT\\MIT 2\\Fatunwase Micheal\\Fatunwase Project\\models\\classical\\diacritic_preserved__stopwords_removed__logistic_regression.joblib"
+}

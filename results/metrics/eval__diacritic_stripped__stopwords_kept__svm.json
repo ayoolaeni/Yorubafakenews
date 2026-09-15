@@ -1,0 +1,23 @@
+{
+  "accuracy": 1.0,
+  "precision_macro": 1.0,
+  "recall_macro": 1.0,
+  "f1_macro": 1.0,
+  "confusion_matrix": [
+    [
+      4,
+      0
+    ],
+    [
+      0,
+      9
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "genuine",
+    "fake"
+  ],
+  "variant": "diacritic_stripped__stopwords_kept",
+  "model": "svm",
+  "model_path": "C:\\Users\\AYOOLA KAYODE\\Desktop\\PROJECT DOCUMENT\\MIT 2\\Fatunwase Micheal\\Fatunwase Project\\models\\classical\\diacritic_stripped__stopwords_kept__svm.joblib"
+}

@@ -1,0 +1,11 @@
+{
+  "variant": "diacritic_preserved__stopwords_kept",
+  "model": "naive_bayes",
+  "cv_folds": 5,
+  "scoring": "f1_macro",
+  "best_params": {
+    "clf__alpha": 0.1
+  },
+  "best_cv_score": 0.9634188034188034,
+  "model_path": "C:\\Users\\AYOOLA KAYODE\\Desktop\\PROJECT DOCUMENT\\MIT 2\\Fatunwase Micheal\\Fatunwase Project\\models\\classical\\diacritic_preserved__stopwords_kept__naive_bayes.joblib"
+}

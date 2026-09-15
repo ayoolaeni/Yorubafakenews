@@ -1,0 +1,12 @@
+{
+  "variant": "diacritic_stripped__stopwords_removed",
+  "model": "svm",
+  "cv_folds": 5,
+  "scoring": "f1_macro",
+  "best_params": {
+    "clf__C": 0.1,
+    "clf__class_weight": "balanced"
+  },
+  "best_cv_score": 1.0,
+  "model_path": "C:\\Users\\AYOOLA KAYODE\\Desktop\\PROJECT DOCUMENT\\MIT 2\\Fatunwase Micheal\\Fatunwase Project\\models\\classical\\diacritic_stripped__stopwords_removed__svm.joblib"
+}

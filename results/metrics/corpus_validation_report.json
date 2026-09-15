@@ -1,0 +1,27 @@
+{
+  "raw_count": 97,
+  "length_dropped": 13,
+  "dedup_dropped": 0,
+  "final_count": 84,
+  "balance": {
+    "total": 84,
+    "label_counts": {
+      "fake": 54,
+      "genuine": 30
+    },
+    "source_counts": {
+      "fake/Dubawa": 54,
+      "genuine/BBC News Yoruba": 30
+    },
+    "genuine_share": 0.35714285714285715
+  },
+  "leakage": {
+    "source_only_accuracy": 1.0,
+    "flagged": true
+  },
+  "warnings": [
+    "corpus size 84 outside target range [3000, 4000]",
+    "class balance 0.36 far from target 0.5",
+    "source-only accuracy 1.00 exceeds leakage threshold 0.70 -- label may be confounded with source"
+  ]
+}

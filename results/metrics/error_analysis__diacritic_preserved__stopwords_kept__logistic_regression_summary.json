@@ -1,0 +1,12 @@
+{
+  "variant": "diacritic_preserved__stopwords_kept",
+  "model": "logistic_regression",
+  "test_size": 13,
+  "error_count": 0,
+  "error_rate": 0.0,
+  "false_positive_count": 0,
+  "false_negative_count": 0,
+  "errors_by_source": {},
+  "avg_token_count_errors": null,
+  "avg_token_count_correct": 146.92307692307693
+}
