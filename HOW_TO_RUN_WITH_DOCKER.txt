@@ -1,0 +1,152 @@
+========================================================================
+ YORUBA FAKE NEWS DETECTOR - HOW TO RUN (DOCKER DESKTOP)
+========================================================================
+
+This guide is for someone who has been sent this project as a ZIP file
+and wants to run it on their own Windows, Mac, or Linux computer.
+
+You do NOT need to install Python, or any code libraries, or retrain
+any model. Everything the app needs is already included in this
+folder. You only need one program: Docker Desktop.
+
+------------------------------------------------------------------------
+STEP 1 - Install Docker Desktop (skip if already installed)
+------------------------------------------------------------------------
+
+1. Go to: https://www.docker.com/products/docker-desktop/
+2. Click "Download Docker Desktop" and choose your operating system
+   (Windows, Mac, or Linux).
+3. Run the installer and follow the on-screen prompts (accept the
+   defaults unless you know you need something different).
+4. Restart your computer if the installer asks you to.
+5. Open "Docker Desktop" from your Start Menu / Applications folder.
+6. Wait until it says "Docker Desktop is running" (a whale icon in
+   your system tray / menu bar turns steady, not animated). This can
+   take 1-2 minutes the first time.
+
+   Windows users only: if Docker Desktop shows an error about WSL2,
+   click the "Install" / "Update WSL2" button it offers, restart your
+   computer, then reopen Docker Desktop.
+
+------------------------------------------------------------------------
+STEP 2 - Unzip the project
+------------------------------------------------------------------------
+
+1. Find the ZIP file you were sent (e.g. "Fatunwase Project.zip").
+2. Right-click it and choose "Extract All..." (Windows) or double-click
+   it (Mac) to unzip it.
+3. Pick a simple location to extract to, for example:
+      Windows:  C:\Projects\Fatunwase Project
+      Mac:      ~/Projects/Fatunwase Project
+4. Open the extracted folder and confirm you can see files named
+   "Dockerfile" and "docker-compose.yml" inside it. If you see those,
+   you're in the right place.
+
+------------------------------------------------------------------------
+STEP 3 - Open a terminal in the project folder
+------------------------------------------------------------------------
+
+Windows:
+  1. Open the extracted project folder in File Explorer.
+  2. Click the address bar at the top, type "cmd", and press Enter.
+     (This opens Command Prompt already inside the correct folder.)
+
+     Alternative: right-click inside the folder while holding Shift,
+     and choose "Open PowerShell window here" / "Open in Terminal".
+
+Mac:
+  1. Open the extracted project folder in Finder.
+  2. Right-click the folder itself (not a file inside it) and choose
+     "New Terminal at Folder". If you don't see that option, open the
+     Terminal app and type "cd " (with a space), drag the folder into
+     the Terminal window, and press Enter.
+
+------------------------------------------------------------------------
+STEP 4 - Start the app
+------------------------------------------------------------------------
+
+In the terminal window you just opened, type this command and press
+Enter:
+
+    docker compose up --build app
+
+What happens next:
+  - The first time you run this, Docker will download and set up
+    everything the app needs. This can take several minutes depending
+    on your internet speed (only needs to happen once).
+  - You'll see a lot of text scroll by - that's normal.
+  - When it's ready, you'll see a line similar to:
+        You can now view your Streamlit app in your browser.
+        Local URL: http://localhost:8501
+
+------------------------------------------------------------------------
+STEP 5 - Open the app in your browser
+------------------------------------------------------------------------
+
+1. Open any web browser (Chrome, Edge, Firefox, Safari).
+2. Go to this address:
+
+        http://localhost:8501
+
+3. You should see the "Yoruba Fake News Detector" page.
+4. Paste or type Yoruba news text into the box and click "Check".
+   The app will respond with GENUINE or FAKE and a confidence score.
+
+------------------------------------------------------------------------
+STEP 6 - Stop the app when you're done
+------------------------------------------------------------------------
+
+Go back to the terminal window from Step 4 and press:
+
+        Ctrl + C
+
+This stops the app but keeps everything set up for next time. Later,
+to run it again, just repeat Step 4 (it will start instantly the
+second time, no long wait).
+
+If you want to fully remove the app's containers afterwards, run:
+
+        docker compose down
+
+------------------------------------------------------------------------
+OPTIONAL - Running the API instead of (or alongside) the web page
+------------------------------------------------------------------------
+
+This project also includes a programmatic API (for developers who want
+to send it text and get a JSON answer back, instead of using the web
+page). To start it:
+
+        docker compose up --build api
+
+It will be available at: http://localhost:8000
+Example test (in a second terminal window):
+
+        curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d "{\"text\": \"some Yoruba news text here\"}"
+
+To run BOTH the web page and the API at the same time:
+
+        docker compose up --build
+
+------------------------------------------------------------------------
+TROUBLESHOOTING
+------------------------------------------------------------------------
+
+"docker: command not found" / "'docker' is not recognized"
+    -> Docker Desktop isn't installed, or isn't running. Reopen Docker
+       Desktop and wait for it to fully start, then try again.
+
+"port is already allocated" / "port 8501 already in use"
+    -> Something else on your computer is already using that address.
+       Close the other program, or ask for help changing the port in
+       docker-compose.yml.
+
+Page won't load in the browser
+    -> Check the terminal window - if it's still downloading/building,
+       wait for it to finish. If it shows an error, copy the error
+       text and send it back for help.
+
+Nothing above solves it
+    -> Send a screenshot of the terminal window (Step 4) to the
+       project author for help.
+
+========================================================================

@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    image: yoruba-fake-news-detector:latest
+    ports:
+      - "8501:8501"
+    command: ["streamlit", "run", "app/streamlit_app.py", "--server.address=0.0.0.0", "--server.port=8501"]
+
+  api:
+    build: .
+    image: yoruba-fake-news-detector:latest
+    ports:
+      - "8000:8000"
+    command: ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]

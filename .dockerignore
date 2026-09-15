@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Local virtualenv (rebuilt fresh inside the image)
+venv/
+.venv/
+
+# Git
+.git/
+.gitignore
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Test / lint artefacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Notebooks (not needed to serve the app)
+.ipynb_checkpoints/
+notebooks/
+
+# Docs (not needed inside the image)
+docs/

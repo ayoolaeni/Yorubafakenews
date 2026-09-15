@@ -18,7 +18,32 @@ def is_transformer_path(model_path: str | Path) -> bool:
     return Path(model_path).is_dir()
 
 
+def _resolve_model_path(model_path: str | Path) -> Path:
+    """Metrics JSON stores the absolute path model_path had at training time,
+    which breaks the moment the project moves to a different machine, user,
+    drive letter, or a Docker container. If that path is gone, rebuild it
+    from the current models dir using the filename train.py always derives
+    from variant+model_name (see src/models/train_classical.py:save_model
+    and train_transformer.py:save_model)."""
+    path = Path(model_path)
+    if path.exists():
+        return path
+    from src.config import settings
+
+    # pathlib.Path(...).name only splits on the *current* OS's separator, so
+    # a Windows-written path like "C:\\...\\model.joblib" doesn't split on
+    # POSIX (backslash isn't a separator there) and .name returns the whole
+    # string. Normalise both separators ourselves before taking the tail.
+    name = str(model_path).replace("\\", "/").rstrip("/").rsplit("/", 1)[-1]
+    for sub in ("classical", "transformers"):
+        candidate = settings.paths.models / sub / name
+        if candidate.exists():
+            return candidate
+    return path
+
+
 def load_model(model_path: str | Path) -> Any:
+    model_path = _resolve_model_path(model_path)
     if is_transformer_path(model_path):
         from transformers import AutoModelForSequenceClassification, AutoTokenizer
 

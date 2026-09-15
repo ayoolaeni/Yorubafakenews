@@ -1,0 +1,26 @@
+# Dependencies to SERVE the already-trained classical model via
+# app/streamlit_app.py and app/api.py (used by the Docker image).
+#
+# This is a subset of requirements.txt: it deliberately excludes
+# scraping (requests/selenium/beautifulsoup4/feedparser/lxml), transformer
+# fine-tuning (torch/transformers/datasets/accelerate/sentencepiece),
+# embeddings (gensim), plotting (matplotlib/seaborn), and testing
+# (pytest) -- none of those are imported by the serving path
+# (src/models/predictor.py -> src/models/inference.py only imports
+# transformers lazily, if the best model ever turns out to be one).
+# If you need the full pipeline (scraping/training/evaluation) inside
+# a container too, use requirements.txt instead.
+
+pandas>=2.0
+numpy>=1.24
+# Pinned to the exact version the committed .joblib models were pickled
+# with (see the venv this repo was developed in) -- scikit-learn does not
+# guarantee cross-version pickle compatibility, and a minor mismatch here
+# already produces InconsistentVersionWarning at load time.
+scikit-learn==1.9.0
+streamlit>=1.28
+fastapi>=0.104
+uvicorn>=0.24
+pydantic>=2.4
+pyyaml>=6.0
+python-dotenv>=1.0
